@@ -1,6 +1,6 @@
 # Simple Theme Provider
 
-![Version](https://img.shields.io/npm/v/@fb/theme-provider)
+![Version](https://img.shields.io/npm/v/eztp)
 
 A simple React ThemeProvider component to easily manage the assets and css variables used per theme.
 
@@ -14,7 +14,7 @@ This was made for a side project initially but there are plans to make this more
 This a pretty straightforward component to use. Set it up as :
 
 ```jsx
-import { ThemeProvider } from "@fb/theme-provider";
+import { ThemeProvider } from "eztp";
 
 const MyComponent = () => {
 	return (
@@ -41,7 +41,7 @@ const MyComponent = () => {
 This hook is useful to grab information on the theme from within your components such as the current theme, or potential assets you would have configured for the theme.
 
 ```jsx
-import { useTheme } from '@fb/theme-provider';
+import { useTheme } from 'eztp';
 
 const MyComponent = () => {
     const theme = useTheme();
