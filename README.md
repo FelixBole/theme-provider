@@ -1,6 +1,6 @@
 # Simple Theme Provider
 
-![Version](https://img.shields.io/npm/v/)
+![Version](https://img.shields.io/npm/v/@fb/theme-provider)
 
 A simple React ThemeProvider component to easily manage the assets and css variables used per theme.
 
