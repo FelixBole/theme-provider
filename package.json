@@ -14,6 +14,9 @@
 		"component",
 		"ui"
 	],
+	"repository": {
+		"url": "https://github.com/FelixBole/theme-provider"
+	},
 	"author": "Felix Bole <felix.slax@gmail.com>",
 	"license": "MIT",
 	"dependencies": {

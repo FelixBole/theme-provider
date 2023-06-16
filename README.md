@@ -41,12 +41,12 @@ const MyComponent = () => {
 This hook is useful to grab information on the theme from within your components such as the current theme, or potential assets you would have configured for the theme.
 
 ```jsx
-import { useTheme } from 'eztp';
+import { useTheme } from "eztp";
 
 const MyComponent = () => {
-    const theme = useTheme();
+	const theme = useTheme();
 
-    // You now have access to theme properties
-    // assets / variables / theme etc
-}
+	// You now have access to theme properties
+	// assets / variables / theme etc
+};
 ```
