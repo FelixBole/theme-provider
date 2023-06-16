@@ -1,6 +1,6 @@
 {
 	"name": "eztp",
-	"version": "0.1.0",
+	"version": "0.2.0-beta.2",
 	"description": "A simple, easy to use customizable React ThemeProvider component",
 	"main": "index.js",
 	"scripts": {
@@ -14,6 +14,7 @@
 		"component",
 		"ui"
 	],
+	"types": "eztp.d.ts",
 	"repository": {
 		"url": "https://github.com/FelixBole/theme-provider"
 	},

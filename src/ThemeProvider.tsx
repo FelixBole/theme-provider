@@ -6,18 +6,21 @@ import {
 	useState,
 } from "react";
 
-type CSSVar = { [key: string]: string };
+type eztpCSSVars = {
+	[key: string]: string;
+};
 
 type ThemeCSSVars = {
 	/**
-	 * The theme name
+	 * Name of the theme
 	 */
 	theme: string;
 
 	/**
-	 * The variables associated to this theme
+	 * CSS Variables associated
+	 * to the theme
 	 */
-	vars: CSSVar;
+	vars: eztpCSSVars;
 };
 
 type ThemeProviderProps = {
@@ -65,7 +68,7 @@ type ThemeContextValue = {
 	 * CSS variables set for this theme
 	 * for access via javascript
 	 */
-	variables: CSSVar;
+	variables: eztpCSSVars;
 
 	/**
 	 * Any custom assets for the
@@ -108,7 +111,7 @@ export const ThemeProvider = (props: PropsWithChildren<ThemeProviderProps>) => {
 		defaultTheme || themes[0]?.theme || DEFAULT_VALUE.theme
 	);
 
-	const [variables, setVariables] = useState<CSSVar>(
+	const [variables, setVariables] = useState<eztpCSSVars>(
 		themes[0]?.vars || DEFAULT_VALUE.variables
 	);
 
@@ -161,5 +164,5 @@ export const ThemeProvider = (props: PropsWithChildren<ThemeProviderProps>) => {
 };
 
 export const useTheme = () => {
-	useContext(ThemeContext);
+	return useContext(ThemeContext);
 };
