@@ -1,6 +1,6 @@
 {
 	"name": "eztp",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A simple, easy to use customizable React ThemeProvider component",
 	"main": "index.js",
 	"scripts": {

@@ -1,13 +1,14 @@
-# Simple Theme Provider
+# Easy Theme Provider
 
 ![Version](https://img.shields.io/npm/v/eztp)
 
-A simple React ThemeProvider component to easily manage the assets and css variables used per theme.
+An easy to use and customizable React Theme Provider component to easily manage the assets and css variables used per theme.
 
-This was made for a side project initially but there are plans to make this more extensive such as :
+## Installation
 
-- Adding an optional ThemeSwitcher component that can be overriden
-- Adding an option to pass in custom methods
+```bash
+npm i eztp
+```
 
 ## Usage
 
@@ -19,7 +20,13 @@ import { ThemeProvider } from "eztp";
 const MyComponent = () => {
 	return (
 		<ThemeProvider
-			themes={[{ theme: "light", vars: { "--color-primary": "white" } }]}
+			themes={[
+				{
+					theme: "light",
+					vars: { "--color-primary": "white" },
+					assets: { foo: "bar" },
+				},
+			]}
 		>
 			//... Your code
 		</ThemeProvider>
@@ -31,10 +38,8 @@ const MyComponent = () => {
 
 | Property | Required | Description |
 | --- | --- | --- |
-| themes | true | An array of theme <> CSS Variables configurations. |
+| themes | true | An array of theme configurations with the theme name, the css variables and any extra asset you wish to use. |
 | defaultTheme | false | The theme to start with. If not set, will use the first theme set in `themes` |
-| assets | false | An array of theme <> assets configurations. Allows to switch between assets when switching theme |
-| extra | false | Any extra information you want to make available through the useTheme hook |
 
 ## The useTheme hook
 
@@ -44,9 +49,38 @@ This hook is useful to grab information on the theme from within your components
 import { useTheme } from "eztp";
 
 const MyComponent = () => {
-	const theme = useTheme();
+	const { theme, assets, variables, toggle } = useTheme();
 
 	// You now have access to theme properties
-	// assets / variables / theme etc
+	// and the toggle method allowing you to change
+	// to another theme (assuming you configured it)
+
+	return (
+		<button
+			onClick={() => {
+				toggle("light");
+			}}
+		>
+			Switch to light theme
+		</button>
+	);
 };
+```
+
+## Typescript
+
+Types are bundled with the library, no need for an external @types dependency.
+
+The library allows you to type your assets if you configure any for your themes. The way to do so is to specify the type when using the useTheme hook.
+
+```jsx
+type MyType = {
+	foo: "bar",
+};
+
+const MyComponent = () => {
+  const { assets } = useTheme<MyType>();
+
+  // assets will be recognized as being of type MyType
+}
 ```
