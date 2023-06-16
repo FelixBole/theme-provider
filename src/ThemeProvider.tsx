@@ -2,6 +2,7 @@ import {
 	PropsWithChildren,
 	createContext,
 	useContext,
+	useEffect,
 	useMemo,
 	useState,
 } from "react";
@@ -74,10 +75,7 @@ type ThemeContextValue = {
 	 * Any custom assets for the
 	 * theme if speficied
 	 */
-	assets: {
-		theme: string;
-		assets: any;
-	}[];
+	assets: any;
 
 	/**
 	 * Available only if set by the user
@@ -93,7 +91,7 @@ type ThemeContextValue = {
 
 const DEFAULT_VALUE: ThemeContextValue = {
 	theme: "default",
-	assets: [],
+	assets: {},
 	variables: {},
 	toggle: (theme: string) => {
 		console.log(
@@ -107,20 +105,18 @@ const ThemeContext = createContext(DEFAULT_VALUE);
 export const ThemeProvider = (props: PropsWithChildren<ThemeProviderProps>) => {
 	const { defaultTheme, extra, themes, assets } = props;
 
-	const [theme, setTheme] = useState<string>(
-		defaultTheme || themes[0]?.theme || DEFAULT_VALUE.theme
-	);
+	const starterTheme = defaultTheme || themes[0]?.theme || DEFAULT_VALUE.theme;
+
+	const [theme, setTheme] = useState<string>(starterTheme);
 
 	const [variables, setVariables] = useState<eztpCSSVars>(
 		themes[0]?.vars || DEFAULT_VALUE.variables
 	);
 
-	const [currentAssets, setCurrentAssets] = useState<
-		{
-			theme: string;
-			assets: any;
-		}[]
-	>(assets || DEFAULT_VALUE.assets);
+	const [currentAssets, setCurrentAssets] = useState<any>(
+		assets?.find((o) => o?.theme === starterTheme)?.assets ||
+			DEFAULT_VALUE.assets
+	);
 
 	const setupVars = (activeTheme: string) => {
 		const exists = themes.find((el) => el.theme === activeTheme);
@@ -137,6 +133,8 @@ export const ThemeProvider = (props: PropsWithChildren<ThemeProviderProps>) => {
 	};
 
 	const toggle = (newTheme: string) => {
+		if (newTheme === theme) return;
+
 		setTheme(newTheme);
 		setupVars(newTheme);
 
@@ -145,6 +143,10 @@ export const ThemeProvider = (props: PropsWithChildren<ThemeProviderProps>) => {
 
 		setCurrentAssets(assetsExists.assets);
 	};
+
+	useEffect(() => {
+		setupVars(starterTheme);
+	}, []);
 
 	const value: ThemeContextValue = useMemo(() => {
 		return {

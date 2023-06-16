@@ -61,10 +61,7 @@ declare module "eztp" {
 		 * Any custom assets for the
 		 * theme if speficied
 		 */
-		assets: {
-			theme: string;
-			assets: any;
-		}[];
+		assets: any;
 
 		/**
 		 * Available only if set by the user
