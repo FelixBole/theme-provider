@@ -11,7 +11,7 @@ type eztpCSSVars = {
 	[key: string]: string;
 };
 
-type ThemeCSSVars = {
+type ThemeConfig = {
 	/**
 	 * Name of the theme
 	 */
@@ -22,6 +22,13 @@ type ThemeCSSVars = {
 	 * to the theme
 	 */
 	vars: eztpCSSVars;
+
+	/**
+	 * Assets for the theme such as
+	 * images or any other information
+	 * you want to access per theme
+	 */
+	assets?: any;
 };
 
 type ThemeProviderProps = {
@@ -29,34 +36,13 @@ type ThemeProviderProps = {
 	 * All the different themes that should
 	 * be available.
 	 */
-	themes: ThemeCSSVars[];
-
-	/**
-	 * Any potential other logos / images
-	 * that should be replaced according to
-	 * the theme
-	 */
-	assets?: {
-		/**
-		 * The theme name. Should match
-		 * the theme name specified in the
-		 * "themes" field
-		 */
-		theme: string;
-		assets: any;
-	}[];
+	themes: ThemeConfig[];
 
 	/**
 	 * If not specified will use themes[0].theme
 	 * as default
 	 */
 	defaultTheme?: string;
-
-	/**
-	 * Any extra information to add to the
-	 * provider context
-	 */
-	extra?: any;
 };
 
 type ThemeContextValue = {
@@ -76,11 +62,6 @@ type ThemeContextValue = {
 	 * theme if speficied
 	 */
 	assets: any;
-
-	/**
-	 * Available only if set by the user
-	 */
-	extra?: any;
 
 	/**
 	 * Switches to the specified theme
@@ -103,7 +84,7 @@ const DEFAULT_VALUE: ThemeContextValue = {
 const ThemeContext = createContext(DEFAULT_VALUE);
 
 export const ThemeProvider = (props: PropsWithChildren<ThemeProviderProps>) => {
-	const { defaultTheme, extra, themes, assets } = props;
+	const { defaultTheme, themes } = props;
 
 	const starterTheme = defaultTheme || themes[0]?.theme || DEFAULT_VALUE.theme;
 
@@ -114,7 +95,7 @@ export const ThemeProvider = (props: PropsWithChildren<ThemeProviderProps>) => {
 	);
 
 	const [currentAssets, setCurrentAssets] = useState<any>(
-		assets?.find((o) => o?.theme === starterTheme)?.assets ||
+		themes?.find((o) => o?.theme === starterTheme)?.assets ||
 			DEFAULT_VALUE.assets
 	);
 
@@ -138,7 +119,7 @@ export const ThemeProvider = (props: PropsWithChildren<ThemeProviderProps>) => {
 		setTheme(newTheme);
 		setupVars(newTheme);
 
-		const assetsExists = assets?.find((o) => o.theme === newTheme);
+		const assetsExists = themes?.find((o) => o.theme === newTheme);
 		if (!assetsExists) return;
 
 		setCurrentAssets(assetsExists.assets);
@@ -154,7 +135,6 @@ export const ThemeProvider = (props: PropsWithChildren<ThemeProviderProps>) => {
 			assets: currentAssets,
 			variables,
 			toggle,
-			extra,
 		};
 	}, [theme, currentAssets, variables]);
 

@@ -5,32 +5,32 @@ declare module "eztp" {
 		[key: string]: string;
 	};
 
-	type ThemeCSSVars = {
+	type ThemeConfig = {
+		/**
+		 * Name of the theme
+		 */
 		theme: string;
+
+		/**
+		 * CSS Variables associated
+		 * to the theme
+		 */
 		vars: eztpCSSVars;
+
+		/**
+		 * Assets for the theme such as
+		 * images or any other information
+		 * you want to access per theme
+		 */
+		assets?: any;
 	};
 
-	interface ThemeProviderProps {
+	type ThemeProviderProps = {
 		/**
 		 * All the different themes that should
 		 * be available.
 		 */
-		themes: ThemeCSSVars[];
-
-		/**
-		 * Any potential other logos / images
-		 * that should be replaced according to
-		 * the theme
-		 */
-		assets?: {
-			/**
-			 * The theme name. Should match
-			 * the theme name specified in the
-			 * "themes" field
-			 */
-			theme: string;
-			assets: any;
-		}[];
+		themes: ThemeConfig[];
 
 		/**
 		 * If not specified will use themes[0].theme
@@ -43,9 +43,9 @@ declare module "eztp" {
 		 * provider context
 		 */
 		extra?: any;
-	}
+	};
 
-	type ThemeContextValue = {
+	type ThemeContextValue<T> = {
 		/**
 		 * The current active theme
 		 */
@@ -61,12 +61,7 @@ declare module "eztp" {
 		 * Any custom assets for the
 		 * theme if speficied
 		 */
-		assets: any;
-
-		/**
-		 * Available only if set by the user
-		 */
-		extra?: any;
+		assets: T;
 
 		/**
 		 * Switches to the specified theme
@@ -75,9 +70,21 @@ declare module "eztp" {
 		toggle: (theme: string) => void;
 	};
 
+	/**
+	 * A simple Theme Provider component that gives full
+	 * control on all assets and variables that should
+	 * be changed when switching themes
+	 */
 	function ThemeProvider(
 		props: PropsWithChildren<ThemeProviderProps>
 	): JSX.Element;
 
-    function useTheme(): ThemeContextValue;
+	/**
+	 * Hook to access theme information within the
+	 * ThemeProvider.
+	 *
+	 * For typescript users, you can specify a type T
+	 * for your assets to avoid having it set as any
+	 */
+	function useTheme<T = any>(): ThemeContextValue<T>;
 }
