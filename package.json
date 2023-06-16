@@ -1,0 +1,19 @@
+{
+	"name": "@fb/theme-provider",
+	"version": "0.1.0",
+	"description": "A simple customizable React ThemeProvider component",
+	"main": "index.js",
+	"scripts": {
+		"build": "tsc"
+	},
+	"keywords": [],
+	"author": "Felix Bole <felix.slax@gmail.com>",
+	"license": "ISC",
+	"dependencies": {
+    "react": "^18.2.0"
+	},
+	"devDependencies": {
+    "@types/react": "^18.2.12",
+    "typescript": "^5.1.3"
+	}
+}
